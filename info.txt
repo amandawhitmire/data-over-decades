@@ -1,0 +1,24 @@
+Questions to optimize the code for you:
+
+1. Data Source & Structure
+   - Do you already have your bibliographic data? If so, what format is it in (CSV, Excel, RDS, database)?
+   - What fields/columns does your dataset contain? (e.g., Title, Author, Year, Publisher, ISBN, Subject, Keywords, Abstract, etc.)
+   - Approximately how many records do you have? (This helps determine if we need performance optimizations)
+
+2. Filter Criteria
+   - What specific filters do you want to include? For example:
+     - Text search (Title, Author, Keywords)?
+     - Year range?
+     - Subject/Category dropdown?
+     - Publisher?
+     - Language?
+     - Any other specific fields?
+
+3. Display Preferences
+   - Which columns should be visible in the results table?
+   - Do you want any special formatting (e.g., clickable links, formatted citations)?
+   - Should users be able to download the filtered results?
+
+4. GitHub Hosting
+   - Are you planning to deploy to shinyapps.io (free hosting for Shiny apps) or GitHub Pages? 
+     - Note: GitHub Pages can't directly host Shiny apps since they require R to be running. You'd typically use shinyapps.io, Posit Connect, or your own server.
