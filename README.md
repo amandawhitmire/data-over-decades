@@ -1,7 +1,7 @@
-# Field Station Bibliographic Catalog — Shiny App
+# Field Station Student Papers Bibliographic Catalog
 
 A searchable, filterable web catalog of bibliographic records for field station
-course materials, built with R and Shiny and deployed to shinyapps.io.
+course materials, built by Claude Opus 5.5 in HTML.
 
 ---
 
@@ -15,12 +15,9 @@ single-record view styled like a traditional library catalog display.
 `docs/` (see Section 11) and is replacing the Shiny app on shinyapps.io.
 
 **Stack:**
-- R / RStudio
-- `shiny` — application framework
 - `DT` — interactive results table
 - `dplyr`, `stringr`, `readr` — data wrangling
-- GitHub — version control
-- shinyapps.io — hosting
+- GitHub — version control, hosting
 
 ---
 
@@ -252,37 +249,3 @@ station) is written by hand. Update it when the data changes.
 Libraries (loaded from CDNs, no install step): DataTables (the same table
 library `DT` uses), PapaParse (CSV parsing and export), and noUiSlider (year
 range slider).
-
-**The whole CSV is public.** Anyone visiting the site can download the full
-dataset, including abstracts.
-
-### Updating the data
-
-The site reads `docs/data/dod-data.csv`, not the copy in the project root.
-After changing the data, copy it over and commit both:
-
-```sh
-cp dod-data.csv docs/data/dod-data.csv
-```
-
-### Preview locally
-
-Browsers block loading the CSV from a page opened directly as a file, so
-serve the folder instead:
-
-```sh
-python3 -m http.server 8000 --directory docs
-```
-
-Then open <http://localhost:8000>.
-
-### Turn on GitHub Pages
-
-1. Push `docs/` to the `main` branch on GitHub.
-2. In the repository: **Settings → Pages**.
-3. Under **Build and deployment**, choose **Deploy from a branch**, branch
-   `main`, folder `/docs`, then **Save**.
-4. After a minute or two the site is live at
-   <https://amandawhitmire.github.io/data-over-decades/>.
-
-GitHub Pages on a private repository requires a paid GitHub plan.
