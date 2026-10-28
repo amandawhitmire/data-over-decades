@@ -45,7 +45,7 @@ ui <- fluidPage(
 
           # Text search
           textInput(inputId = "searchText",
-                    label = "Search (Title, Creator, Subject, Location):",
+                    label = "Search (Title, Creator, Co-authors/Advisors, Subject, Location):",
                     placeholder = "Enter search terms..."),
 
           # Year range slider
@@ -129,6 +129,7 @@ server <- function(input, output, session) {
         filter(
           str_detect(title, pattern) |
             str_detect(creator, pattern) |
+            str_detect(secondarycreator, pattern) |
             str_detect(subject, pattern) |
             str_detect(location, pattern)
         )

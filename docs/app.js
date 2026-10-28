@@ -4,7 +4,7 @@
 const DATA_URL = "data/dod-data.csv";
 
 // Columns searched by the free-text box
-const SEARCH_FIELDS = ["title", "creator", "subject", "location"];
+const SEARCH_FIELDS = ["title", "creator", "secondarycreator", "subject", "location"];
 
 // Dropdown filters (each <select> has id "filter-<column>")
 const FILTER_FIELDS = ["institution", "fieldstation", "coursenumber", "coursename"];

@@ -182,7 +182,7 @@ from `docs/` on `main`. GitHub matches the local copy as of commit `aef9525`.
 
 **Next steps:**
 
-- [ ] **Update the site's data.** The site still loads the old 9,932-record
+- [x] **Update the site's data.** The site still loads the old 9,932-record
   `docs/data/dod-data.csv`. The project root `dod-data.csv` has the newer
   10,170 records (Hopkins Marine Station 986 instead of 747; Friday Harbor
   3,709 instead of 3,710). Copy it over:
