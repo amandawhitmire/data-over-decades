@@ -12,7 +12,7 @@ with full-text search, faceted filtering, downloadable results, and a detailed
 single-record view styled like a traditional library catalog display.
 
 **Status:** Working prototype complete. A static version for GitHub Pages lives in
-`docs/` (see Section 11) and is replacing the Shiny app on shinyapps.io.
+`docs/` (see Section 8) and is replacing the Shiny app on shinyapps.io.
 
 **Stack:**
 - `DT` — interactive results table
@@ -138,12 +138,12 @@ If you're picking this project up fresh: this is a bibliographic catalog Shiny
 app for field station course materials. The working `app.R` is already written —
 it loads a CSV, builds a sidebar of filters, renders a `DT` results table, and
 swaps to a detail view when a user clicks an `objectid`. Section 3 above is the
-authoritative spec for required behavior; Section 8 lists current rough edges.
+authoritative spec for required behavior; Section 5 lists current rough edges.
 Sections 1–2 cover the data shape. Start by reading `app.R` alongside Section 3.
 
 The static GitHub Pages version in `docs/` implements the same spec in
-JavaScript (`docs/app.js`); see Section 11. Changes to required behavior should
-be made in both until the Shiny app is retired.
+JavaScript (`docs/app.js`); see Section 8. Changes to required behavior should be made in both until the
+Shiny app is retired. Section 9 lists where work left off.
 
 ---
 
@@ -172,3 +172,34 @@ station) is written by hand. Update it when the data changes.
 Libraries (loaded from CDNs, no install step): DataTables (the same table
 library `DT` uses), PapaParse (CSV parsing and export), and noUiSlider (year
 range slider).
+
+---
+
+## 9. Status and Next Steps (as of 2026-10-27)
+
+**Live site:** <https://amandawhitmire.github.io/data-over-decades/>, served
+from `docs/` on `main`. GitHub matches the local copy as of commit `aef9525`.
+
+**Next steps:**
+
+- [ ] **Update the site's data.** The site still loads the old 9,932-record
+  `docs/data/dod-data.csv`. The project root `dod-data.csv` has the newer
+  10,170 records (Hopkins Marine Station 986 instead of 747; Friday Harbor
+  3,709 instead of 3,710). Copy it over:
+  `cp dod-data.csv docs/data/dod-data.csv`
+- [ ] **Update the About page table** ("What's in the Catalog" in
+  `docs/about.html`) with the new counts and year ranges, and the "9,932
+  papers" sentence above it.
+- [ ] **Decide what to do with the new, uncommitted files:** the harvesting
+  scripts (`harvest_fhl_oai.R`, `harvest_fhl_rest.R`, `update-uw.R`,
+  `build_series_crosswalk.R`, `check-fhl-subjects.R`, `test-rest-api.R`) and
+  four CSVs in `docs/data/` (`fhl_oai_long.csv`, `fhl_rest_long.csv`,
+  `series_crosswalk_DRAFT.csv`, `uw_oai_sets.csv`). **Anything committed in
+  `docs/` is public on the website**, so move working files elsewhere (for
+  example a `data-raw/` folder) unless they are meant to be published.
+- [ ] **Add the UC Berkeley papers** (238 records, 1947–1951, from
+  `metadata-berkeley-papers.csv`, not committed). Its columns (`HRID`,
+  `Contributor`, `Imprint`, `catkey`, …) must be mapped to the catalog's
+  columns in Section 2 first.
+- [ ] **Decide whether to retire the Shiny app.** Until then, behavior
+  changes need making in both `app.R` and `docs/app.js` (Section 7).
