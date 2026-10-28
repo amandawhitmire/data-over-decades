@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bibliographic Records Catalog</title>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <h1>Bibliographic Records Catalog</h1>
+    <nav aria-label="Site">
+      <a href="./" aria-current="page">Catalog</a>
+      <a href="about.html">About</a>
+    </nav>
+  </header>
+  <p class="intro">Student research papers from marine field stations on the North American
+    West Coast. <a href="about.html">About this project</a></p>
+
+  <main>
+    <!-- Catalog page: filters + results table -->
+    <section id="catalog-view" class="catalog">
+      <aside class="sidebar">
+        <h2>Search &amp; Filter</h2>
+
+        <label for="search">Search (Title, Creator, Subject, Location):</label>
+        <input type="search" id="search" placeholder="Enter search terms..." autocomplete="off">
+
+        <label id="year-label">Year Range:</label>
+        <div id="year-slider" aria-labelledby="year-label"></div>
+        <p class="year-values"><span id="year-start"></span> – <span id="year-end"></span></p>
+
+        <label for="filter-institution">Institution:</label>
+        <select id="filter-institution"></select>
+
+        <label for="filter-fieldstation">Field Station:</label>
+        <select id="filter-fieldstation"></select>
+
+        <label for="filter-coursenumber">Course Number:</label>
+        <select id="filter-coursenumber"></select>
+
+        <label for="filter-coursename">Course Name:</label>
+        <select id="filter-coursename"></select>
+
+        <hr>
+
+        <button type="button" id="download" disabled>Download Filtered Results</button>
+      </aside>
+
+      <div class="results">
+        <h2>Search Results</h2>
+        <p id="record-count" aria-live="polite">Loading records…</p>
+        <table id="results" class="display" style="width:100%"></table>
+      </div>
+    </section>
+
+    <!-- Detail page: one full record -->
+    <section id="detail-view" hidden>
+      <button type="button" id="back">← Back to Search Results</button>
+      <hr>
+      <article id="record"></article>
+    </section>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

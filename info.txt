@@ -1,24 +1,19 @@
-Questions to optimize the code for you:
-
 1. Data Source & Structure
-   - Do you already have your bibliographic data? If so, what format is it in (CSV, Excel, RDS, database)?
-   - What fields/columns does your dataset contain? (e.g., Title, Author, Year, Publisher, ISBN, Subject, Keywords, Abstract, etc.)
-   - Approximately how many records do you have? (This helps determine if we need performance optimizations)
+   - The data are in a CSV file.
+   - The dataset contains columns for:  institution,fieldstation,objectid,object_location,date,creator,secondarycreator,title,pages,abstract,subject,location,coursenumber,coursename
+   - There are nearly 10,000 records in the dataset
 
 2. Filter Criteria
-   - What specific filters do you want to include? For example:
-     - Text search (Title, Author, Keywords)?
+   - I would like filters for:
+     - Text search (title, creator, subjects, location)?
      - Year range?
-     - Subject/Category dropdown?
-     - Publisher?
-     - Language?
-     - Any other specific fields?
+     - dropdown menus for: institution,fieldstation, coursenumber, coursename
 
 3. Display Preferences
-   - Which columns should be visible in the results table?
-   - Do you want any special formatting (e.g., clickable links, formatted citations)?
-   - Should users be able to download the filtered results?
+   - Which columns should be visible in the results table? fieldstation,objectid,object_location,date,creator,title,pages,subject
+   - The object_location should be a clickable link.
+   - Should users be able to download the filtered results? Yes.
+   - A user should be able to click on teh objectid and be taken to a new page that displays the full item record from that row. The display should look like a library catalog display with data in the following order, each on a new line: title, abstract, fieldstation,date,creator,secondarycreator,pages,subject,location,objectid,object_location,coursenumber,coursename
 
-4. GitHub Hosting
-   - Are you planning to deploy to shinyapps.io (free hosting for Shiny apps) or GitHub Pages? 
-     - Note: GitHub Pages can't directly host Shiny apps since they require R to be running. You'd typically use shinyapps.io, Posit Connect, or your own server.
+4. Hosting
+   - Repo will deploy to shinyapps.io
