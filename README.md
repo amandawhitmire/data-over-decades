@@ -1,7 +1,7 @@
-# Field Station Bibliographic Catalog — Shiny App
+# Field Station Student Papers Bibliographic Catalog
 
 A searchable, filterable web catalog of bibliographic records for field station
-course materials, built with R and Shiny and deployed to shinyapps.io.
+course materials, built by Claude Opus 5.5 in HTML.
 
 ---
 
@@ -15,12 +15,9 @@ single-record view styled like a traditional library catalog display.
 `docs/` (see Section 11) and is replacing the Shiny app on shinyapps.io.
 
 **Stack:**
-- R / RStudio
-- `shiny` — application framework
 - `DT` — interactive results table
 - `dplyr`, `stringr`, `readr` — data wrangling
-- GitHub — version control
-- shinyapps.io — hosting
+- GitHub — version control, hosting
 
 ---
 
@@ -103,92 +100,15 @@ Includes a "Back to Search Results" button.
 ```
 field-station-catalog/
 ├── app.R              # Full application (UI + server)
-├── data/
-│   └── records.csv    # Bibliographic data
+├── docs/data/
+│         └── dod-data.csv    # Bibliographic data
 ├── README.md          # This file
 ├── .gitignore
-└── rsconnect/         # Created automatically on first deploy (do not edit)
 ```
 
 ---
 
-## 5. Setup
-
-### Install dependencies
-
-```r
-install.packages(c("shiny", "dplyr", "DT", "stringr", "readr", "rsconnect"))
-```
-
-### Point the app at your data
-
-In `app.R`, update the file path near the top:
-
-```r
-data <- read_csv("data/records.csv", col_types = cols(.default = col_character()))
-```
-
-### Run locally
-
-Open `app.R` in RStudio and click **Run App**, or:
-
-```r
-shiny::runApp()
-```
-
----
-
-## 6. Deployment to shinyapps.io
-
-1. Create a free account at <https://www.shinyapps.io>
-2. In shinyapps.io: **Account → Tokens → Show → Copy to clipboard**
-3. Paste the resulting command into the RStudio console:
-
-   ```r
-   rsconnect::setAccountInfo(
-     name   = "YOUR_ACCOUNT",
-     token  = "YOUR_TOKEN",
-     secret = "YOUR_SECRET"
-   )
-   ```
-
-4. Deploy:
-
-   ```r
-   rsconnect::deployApp()
-   ```
-
-   Or use the **Publish** button in RStudio. Confirm the CSV in `data/` is
-   included in the file list before publishing.
-
-### Free tier limits
-- 5 applications
-- 25 active hours per month
-- Limited memory — fine for a dataset of this size
-
----
-
-## 7. GitHub Notes
-
-GitHub cannot host the Shiny app, since Shiny requires a live R session. It can
-host the static version in `docs/` through GitHub Pages (see Section 11).
-
-Suggested `.gitignore`:
-
-```
-.Rproj.user
-.Rhistory
-.RData
-.Ruserdata
-rsconnect/
-```
-
-> **Note:** If the CSV contains anything non-public, keep it out of the repo and
-> load it from a secure source at runtime instead.
-
----
-
-## 8. Known Issues / Things to Watch
+## 5. Known Issues / Things to Watch
 
 - **Date parsing** — `year` assumes `date` begins with a four-digit year.
   Irregular or missing dates produce `NA`. These records appear while the
@@ -200,7 +120,7 @@ rsconnect/
 
 ---
 
-## 9. Backlog / Ideas
+## 6. Backlog / Ideas
 
 - [ ] Make dropdown filters cascade (e.g. course name options limited by selected field station)
 - [ ] Add a "Reset all filters" button
@@ -212,7 +132,7 @@ rsconnect/
 
 ---
 
-## 10. Context for AI Assistants
+## 7. Context for AI Assistants
 
 If you're picking this project up fresh: this is a bibliographic catalog Shiny
 app for field station course materials. The working `app.R` is already written —
@@ -227,7 +147,7 @@ be made in both until the Shiny app is retired.
 
 ---
 
-## 11. Static Site on GitHub Pages
+## 8. Static Site on GitHub Pages
 
 `docs/` contains a static version of the catalog that runs entirely in the
 visitor's browser, so it can be hosted free on GitHub Pages with no R session.
@@ -252,37 +172,3 @@ station) is written by hand. Update it when the data changes.
 Libraries (loaded from CDNs, no install step): DataTables (the same table
 library `DT` uses), PapaParse (CSV parsing and export), and noUiSlider (year
 range slider).
-
-**The whole CSV is public.** Anyone visiting the site can download the full
-dataset, including abstracts.
-
-### Updating the data
-
-The site reads `docs/data/dod-data.csv`, not the copy in the project root.
-After changing the data, copy it over and commit both:
-
-```sh
-cp dod-data.csv docs/data/dod-data.csv
-```
-
-### Preview locally
-
-Browsers block loading the CSV from a page opened directly as a file, so
-serve the folder instead:
-
-```sh
-python3 -m http.server 8000 --directory docs
-```
-
-Then open <http://localhost:8000>.
-
-### Turn on GitHub Pages
-
-1. Push `docs/` to the `main` branch on GitHub.
-2. In the repository: **Settings → Pages**.
-3. Under **Build and deployment**, choose **Deploy from a branch**, branch
-   `main`, folder `/docs`, then **Save**.
-4. After a minute or two the site is live at
-   <https://amandawhitmire.github.io/data-over-decades/>.
-
-GitHub Pages on a private repository requires a paid GitHub plan.
