@@ -37,7 +37,7 @@ single-record view styled like a traditional library catalog display.
 | `object_location` | Displayed as a clickable URL |
 | `date` | Displayed; year extracted for range slider |
 | `creator` | Displayed + searchable |
-| `secondarycreator` | Detail view only |
+| `secondarycreator` | Co-authors/advisors; searchable; detail view only |
 | `title` | Displayed + searchable |
 | `pages` | Displayed |
 | `abstract` | Detail view only |
@@ -54,7 +54,7 @@ digits from `date`.
 ## 3. Functional Requirements
 
 ### Search & filter (left sidebar)
-- **Free-text search** across `title`, `creator`, `subject`, and `location` (case-insensitive, partial match)
+- **Free-text search** across `title`, `creator`, `secondarycreator`, `subject`, and `location` (case-insensitive, partial match)
 - **Year range slider** based on the derived `year` column
 - **Dropdown filters:** `institution`, `fieldstation`, `coursenumber`, `coursename`
   — each includes an "All" option
@@ -98,13 +98,20 @@ Includes a "Back to Search Results" button.
 ## 4. Project Structure
 
 ```
-field-station-catalog/
-├── app.R              # Full application (UI + server)
-├── docs/data/
-│         └── dod-data.csv    # Bibliographic data
+data-over-decades/
+├── app.R              # Shiny app (UI + server); reads dod-data.csv here
+├── dod-data.csv       # Bibliographic data used by the Shiny app
+├── docs/              # Static GitHub Pages site (Section 8)
+│   └── data/
+│       └── dod-data.csv   # Copy of dod-data.csv served to the website
 ├── README.md          # This file
+├── README.html        # Old rendered copy of the README (Feb 2026, out of date)
 ├── .gitignore
 ```
+
+The two `dod-data.csv` files must stay identical. When the data changes,
+update the root file and then **copy** (don't move) it into `docs/data/`;
+moving it breaks the Shiny app.
 
 ---
 
@@ -125,9 +132,11 @@ field-station-catalog/
 - [ ] Make dropdown filters cascade (e.g. course name options limited by selected field station)
 - [ ] Add a "Reset all filters" button
 - [ ] Support bookmarkable URLs so individual records can be linked directly
+  (done in the static site, `#record/<objectid>`; not in the Shiny app)
 - [ ] Add a formatted citation block to the detail view
 - [x] Replace fixed column index with a more robust click handler
-- [ ] Add an "About" / "How to use this catalog" panel
+- [ ] Add an "About" / "How to use this catalog" panel (done in the static
+  site as `docs/about.html`; not in the Shiny app)
 - [ ] Cache the dataset as `.rds` for faster startup
 
 ---
@@ -175,31 +184,33 @@ range slider).
 
 ---
 
-## 9. Status and Next Steps (as of 2026-10-27)
+## 9. Status and Next Steps (as of 2026-10-28)
 
 **Live site:** <https://amandawhitmire.github.io/data-over-decades/>, served
-from `docs/` on `main`. GitHub matches the local copy as of commit `aef9525`.
+from `docs/` on `main`. GitHub matches the local copy as of commit `1ec8cf3`
+(pushed 2026-10-28). The live site serves all 10,170 records, and search covers
+co-authors/advisors (`secondarycreator`) in both the Shiny app and the website.
 
 **Next steps:**
 
-- [x] **Update the site's data.** The site still loads the old 9,932-record
-  `docs/data/dod-data.csv`. The project root `dod-data.csv` has the newer
-  10,170 records (Hopkins Marine Station 986 instead of 747; Friday Harbor
-  3,709 instead of 3,710). Copy it over:
-  `cp dod-data.csv docs/data/dod-data.csv`
+- [x] **Update the site's data.** Done 2026-10-28 (commit `1ec8cf3`):
+  `docs/data/dod-data.csv` now has the 10,170 records (Hopkins Marine Station
+  986 instead of 747; Friday Harbor 3,709 instead of 3,710).
 - [ ] **Update the About page table** ("What's in the Catalog" in
   `docs/about.html`) with the new counts and year ranges, and the "9,932
   papers" sentence above it.
 - [ ] **Decide what to do with the new, uncommitted files:** the harvesting
-  scripts (`harvest_fhl_oai.R`, `harvest_fhl_rest.R`, `update-uw.R`,
-  `build_series_crosswalk.R`, `check-fhl-subjects.R`, `test-rest-api.R`) and
-  four CSVs in `docs/data/` (`fhl_oai_long.csv`, `fhl_rest_long.csv`,
-  `series_crosswalk_DRAFT.csv`, `uw_oai_sets.csv`). **Anything committed in
-  `docs/` is public on the website**, so move working files elsewhere (for
-  example a `data-raw/` folder) unless they are meant to be published.
+  scripts (`harvest_fhl_oai.R`, `harvest_fhl_rest.R`, `map_fhl.R`,
+  `merge_fhl.R`, `update-uw.R`, `build_series_crosswalk.R`,
+  `check-fhl-subjects.R`, `test-rest-api.R`) and seven CSVs in `docs/data/`
+  (`dod-data_backup_2026-10-27.csv`, `fhl-crosswalk.csv`, `fhl_oai_long.csv`,
+  `fhl_rest_long.csv`, `harvest_fhl.csv`, `series_crosswalk_DRAFT.csv`,
+  `uw_oai_sets.csv`). **Anything committed in `docs/` is public on the
+  website**, so move working files elsewhere (for example a `data-raw/`
+  folder) unless they are meant to be published.
 - [ ] **Add the UC Berkeley papers** (238 records, 1947–1951, from
-  `metadata-berkeley-papers.csv`, not committed). Its columns (`HRID`,
-  `Contributor`, `Imprint`, `catkey`, …) must be mapped to the catalog's
-  columns in Section 2 first.
+  `metadata-berkeley-papers.csv`, which is not in this folder or in git).
+  Its columns (`HRID`, `Contributor`, `Imprint`, `catkey`, …) must be mapped
+  to the catalog's columns in Section 2 first.
 - [ ] **Decide whether to retire the Shiny app.** Until then, behavior
   changes need making in both `app.R` and `docs/app.js` (Section 7).
